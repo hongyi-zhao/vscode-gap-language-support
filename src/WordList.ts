@@ -23,10 +23,11 @@
 
 'use strict';
 import * as vscode from 'vscode';
-import * as Trie from 'triejs';
 import { CompletionItem } from './CompletionItem'
 
-export class WordListClass extends Map<vscode.TextDocument, { find: Function }> {
+var TrieSearch = require('trie-search');
+
+export class WordListClass extends Map<vscode.TextDocument, any> {
     activeWord: string;
     /**
      * Add word to the autocomplete list
@@ -40,7 +41,7 @@ export class WordListClass extends Map<vscode.TextDocument, { find: Function }> 
         // Active word is used to hide the given word from the autocomplete.
         this.activeWord = word;
         if (word.length >= 1) {
-            let items = trie.find(word);
+            let items = trie.get(word);
             let item: CompletionItem;
             items && items.some(elem => {
                 if (elem.label === word) {
@@ -52,7 +53,7 @@ export class WordListClass extends Map<vscode.TextDocument, { find: Function }> 
                 item.count++;
             } else {
                 item = new CompletionItem(word, document.fileName);
-                trie.add(word, item);
+                trie.map(word, item);
             }
         }
     }
@@ -65,7 +66,7 @@ export class WordListClass extends Map<vscode.TextDocument, { find: Function }> 
     removeWord(word: string, trie, document: vscode.TextDocument) {
         word = word.replace(RegExp("[^\\w\\-_\\$\\u0080-\\uFFFF]+", "g"), '');
         if (word.length >= 1) {
-            let items = trie.find(word);
+            let items = trie.get(word);
             let item: CompletionItem;
             items && items.some(elem => {
                 if (elem.label === word) {
@@ -84,31 +85,16 @@ export class WordListClass extends Map<vscode.TextDocument, { find: Function }> 
     }
 }
 
-export class SymbolListClass extends Map<vscode.TextDocument, { find: Function }> {
+export class SymbolListClass {
     trie: any;
 
     constructor() {
-        super();
-        this.trie = new Trie({ enableCache: false, maxCache: 100000, returnRoot: true }); 
+        this.trie = new TrieSearch(); 
     }
 
     addWord(word: string, kind: vscode.CompletionItemKind) {
         word = word.replace(RegExp("[^\\w\\-_\\$\\u0080-\\uFFFF]+", "g"), '');
-        // Active word is used to hide the given word from the autocomplete.
-        if (word.length >= 1) {
-            let items = this.trie.find(word);
-            let item: vscode.CompletionItem;
-            items && items.some(elem => {
-                if (elem.label === word) {
-                    item = elem;
-                    return true;
-                }
-            });
-            if (!item)  {
-                item = new vscode.CompletionItem(word, kind);
-                this.trie.add(word, item);
-            }
-        }
+        this.trie.map(word, new vscode.CompletionItem(word, kind));
     }
 }
 

@@ -166,8 +166,7 @@ const AllKeywords = [       "Assert",           "Info",        "IsBound",       
             "true",          "until",          "while" ];
 
 var memoize = require("memoizee");
-var keyword_lookup = memoize((word) => { return KeywordList.trie.find(word) });
-var pkg = require('../package.json');
+var keyword_lookup = memoize((word) => KeywordList.trie.get(word));
 
 var KeywordList =  new SymbolListClass();
 
@@ -175,10 +174,7 @@ export function activate(context: vscode.ExtensionContext) {
     DocumentManager.init();
 
     AllKeywords.forEach((word) => KeywordList.addWord(word, vscode.CompletionItemKind.Keyword));
-    GVars.forEach((word) => KeywordList.addWord(word, vscode.CompletionItemKind.Function));    
-    
-    let alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('');
-    alphabet.forEach(async (word) => keyword_lookup(word));
+    GVars.forEach((word) => KeywordList.addWord(word, vscode.CompletionItemKind.Function));   
 
     context.subscriptions.push(vscode.workspace.onDidChangeTextDocument((e: vscode.TextDocumentChangeEvent) => {
         if (e.document.languageId !== 'gap') {
@@ -224,7 +220,7 @@ class GAPCompletionItemProvider implements vscode.CompletionItemProvider {
         
         let results = [];
         WordList.forEach((trie, doc) => {
-            let words = trie.find(word);
+            let words = trie.get(word);
             if (words) {
                 results = results.concat(words);
             }

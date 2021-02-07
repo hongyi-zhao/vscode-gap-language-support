@@ -23,9 +23,10 @@
 
 'use strict';
 import * as vscode from 'vscode';
-import * as Trie from 'triejs';
 import * as path from 'path';
 import { WordList } from './WordList';
+
+var TrieSearch = require('trie-search');
 
 /**
  * Class to manage addition and removal of documents from the index
@@ -58,7 +59,7 @@ class DocumentManagerClass {
         if (WordList.has(document)) {
             return;
         }
-        const trie = new Trie({ enableCache: false, maxCache: 100000, returnRoot: true });
+        const trie = new TrieSearch();
         for (let i = 0; i < document.lineCount; ++i) {
             const line = document.lineAt(i);
             const text = line.text;
