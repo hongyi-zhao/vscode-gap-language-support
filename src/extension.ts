@@ -28,8 +28,6 @@ import { DocumentManager } from './DocumentManager';
 import { WordListClass, SymbolListClass, WordList } from './WordList';
 import { TextDocument, Position, workspace, TextDocumentChangeEvent, Range, window } from "vscode";
 import { GVars } from './symbols';
-import { config } from 'process';
-import { getPackedSettings } from 'http2';
 
 let content = [];
 /**
@@ -40,9 +38,9 @@ let content = [];
 class ActiveDocManager {
     static beginTransaction() { }
     static endTransaction(updated: boolean) {
-        // if (updated) {
-        //     return;
-        // }
+        if (updated) {
+             return;
+        }
         ActiveDocManager.updateContent();
     }
     static updateContent() {
