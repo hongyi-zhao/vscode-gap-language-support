@@ -4,7 +4,7 @@ This extension provides support for syntax highlighting and basic autocompletion
 
 This extension is based on [vscode-allautocomplete](https://github.com/atishay/vscode-allautocomplete) and [language-gap](https://github.com/ChrisJefferson/language-gap).
 
-## Build from source
+## Building from source
 
 ```shell
 $ git clone https://github.com/hongyi-zhao/vscode-gap-language-support.git 
