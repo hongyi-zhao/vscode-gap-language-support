@@ -3,8 +3,8 @@
 #echo "LoadAllPackages();; lst := Filtered(NamesGVars(), x -> IsValidIdentifier(x) and not x in GAPInfo.Keywords);; f1:=OutputTextFile(\"./src/symbols.ts\",false);; WriteLine(f1, Concatenation(\"export const GVars = \", String(lst), \";\"));; f2:=OutputTextFile(\"./__tmp.symbols\",false);; WriteAll(f2, JoinStringsWithSeparator(lst, \"|\"));;" | gap -q
 
 gap << EOF
-LoadAllPackages();
-lst := Filtered(NamesGVars(), x -> IsValidIdentifier(x) and not x in GAPInfo.Keywords);
+LoadAllPackages();;
+lst := Filtered(NamesGVars(), x -> IsValidIdentifier(x) and not x in GAPInfo.Keywords);;
 
 # The following settings are required when testing is not performed under the source package directory
 # ChangeDirectoryCurrent(UserHomeExpand("~/Public/repo/github.com/feisele/vscode-gap-language-support.git"));
