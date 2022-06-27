@@ -44,7 +44,7 @@ export class CompletionItem extends vscode.CompletionItem {
     }
 
     static copy(item: CompletionItem) {
-        let newItem = new CompletionItem(item.label, item.file);
+        let newItem = new CompletionItem(item.label as string, item.file);
         newItem.count = item.count;
         newItem.details = item.details;
         return newItem;
