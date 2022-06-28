@@ -2,7 +2,7 @@
 
 #echo "LoadAllPackages();; lst := Filtered(NamesGVars(), x -> IsValidIdentifier(x) and not x in GAPInfo.Keywords);; f1:=OutputTextFile(\"./src/symbols.ts\",false);; WriteLine(f1, Concatenation(\"export const GVars = \", String(lst), \";\"));; f2:=OutputTextFile(\"./__tmp.symbols\",false);; WriteAll(f2, JoinStringsWithSeparator(lst, \"|\"));;" | gap -q
 
-gap << EOF
+gap -q --quitonbreak << EOF
 LoadAllPackages();;
 lst := Filtered(NamesGVars(), x -> IsValidIdentifier(x) and not x in GAPInfo.Keywords);;
 
