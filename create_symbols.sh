@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-#echo "LoadAllPackages();; lst := Filtered(NamesGVars(), x -> IsValidIdentifier(x) and not x in GAPInfo.Keywords);; f1:=OutputTextFile(\"./src/symbols.ts\",false);; WriteLine(f1, Concatenation(\"export const GVars = \", String(lst), \";\"));; f2:=OutputTextFile(\"./__tmp.symbols\",false);; WriteAll(f2, JoinStringsWithSeparator(lst, \"|\"));;" | gap -q
-
 #https://gap-system.slack.com/archives/C0PCH4UP2/p1656500219160889?thread_ts=1656084563.706089&cid=C0PCH4UP2
+#the "traditional" solution to such a problem would be this: take your FOO.xml file, copy it to FOO.xml.in, and replace the bit that you want to substitute later by a unique pattern, say @GAPGLOBALS@. Then use whatever dumb tool you like (sed, awk, GAP, ...) to read FOO.xml.in, search for @GAPLOBALS@, and replace just that with the new content; write the output to FOO.xml. Only thing to keep in mind: you should edit FOO.xml.in not FOO.xml ...
+
 gap -q --quitonbreak << EOF
 LoadAllPackages();;
 lst := Filtered(NamesGVars(), x -> IsValidIdentifier(x) and not x in GAPInfo.Keywords);;
