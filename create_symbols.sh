@@ -4,8 +4,9 @@
 #the "traditional" solution to such a problem would be this: take your FOO.xml file, copy it to FOO.xml.in, and replace the bit that you want to substitute later by a unique pattern, say @GAPGLOBALS@. Then use whatever dumb tool you like (sed, awk, GAP, ...) to read FOO.xml.in, search for @GAPLOBALS@, and replace just that with the new content; write the output to FOO.xml. Only thing to keep in mind: you should edit FOO.xml.in not FOO.xml ...
 
 gap -q --quitonbreak << EOF
+# https://gap-system.slack.com/archives/C0PCH4UP2/p1656510349378729?thread_ts=1656084563.706089&cid=C0PCH4UP2
 LoadAllPackages();;
-lst := Filtered(NamesGVars(), x -> IsValidIdentifier(x) and not x in GAPInfo.Keywords);;
+lst := Filtered(NamesGVars(), x -> IsValidIdentifier(x) and not x in GAPInfo.Keywords and not '@' in x);;
 
 # The following settings are required when testing is not performed under the source package directory
 # ChangeDirectoryCurrent(UserHomeExpand("~/Public/repo/github.com/feisele/vscode-gap-language-support.git"));
