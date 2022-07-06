@@ -21,7 +21,9 @@ npm install
 npm run vscode:prepublish
 
 #$ ln -sfr vscode-gap-language-support.git/ ~/.vscode/extensions/
-ln -sfr vscode-gap-language-support.git/ ~/.vscode/extensions/
+#https://github.com/hongyi-zhao/english-wordlist#readme
+find ~/.vscode/extensions -xtype l -exec rm {} +
+ln -sfr $(pwd) ~/.vscode/extensions/
 
 #$ npm help install|grep -A4 -B2 -- -g
 #       • npm install (in a package directory, no arguments):
